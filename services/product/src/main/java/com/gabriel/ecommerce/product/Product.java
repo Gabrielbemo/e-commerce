@@ -1,0 +1,27 @@
+package com.gabriel.ecommerce.product;
+
+import com.gabriel.ecommerce.category.Category;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.math.BigDecimal;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Getter
+@Setter
+@Entity
+public class Product {
+
+    @Id
+    @GeneratedValue
+    private Integer id;
+    private String name;
+    private String description;
+    private double availableQuantity;
+    private BigDecimal pricae;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+}
