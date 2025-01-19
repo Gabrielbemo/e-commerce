@@ -12,6 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@Data
 public class Category {
     @Id
     @GeneratedValue
