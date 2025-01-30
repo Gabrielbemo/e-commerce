@@ -6,6 +6,8 @@ import com.gabriel.ecommerce.kafka.OrderConfirmation;
 import com.gabriel.ecommerce.kafka.OrderProducer;
 import com.gabriel.ecommerce.orderline.OrderLineRequest;
 import com.gabriel.ecommerce.orderline.OrderLineService;
+import com.gabriel.ecommerce.payment.PaymentClient;
+import com.gabriel.ecommerce.payment.PaymentRequest;
 import com.gabriel.ecommerce.product.ProductClient;
 import com.gabriel.ecommerce.product.PurchaseRequest;
 import jakarta.persistence.EntityNotFoundException;
@@ -26,6 +28,7 @@ public class OrderService {
     private final ProductClient productClient;
     private final OrderMapper mapper;
     private final OrderProducer orderProducer;
+    private final PaymentClient paymentClient;
 
     public Integer createOrder(@Valid OrderRequest request) {
 
@@ -49,7 +52,14 @@ public class OrderService {
             );
         }
 
-        // todo start payment process
+        var paymentRequest = new PaymentRequest(
+                request.amount(),
+                request.paymentMethod(),
+                order.getId(),
+                order.getReference(),
+                customer
+        );
+        paymentClient.requestOrderPayment(paymentRequest);
 
         orderProducer.sendOrderConfirmation(
                 new OrderConfirmation(
