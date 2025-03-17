@@ -3,8 +3,8 @@ package com.gabriel.ecommerce.email;
 import com.gabriel.ecommerce.kafka.order.Product;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -24,10 +24,10 @@ import static org.springframework.mail.javamail.MimeMessageHelper.MULTIPART_MODE
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
+@AllArgsConstructor
 public class EmailService {
 
-    private final JavaMailSender mailSender;
+    private final JavaMailSender mailConfig;
     private final SpringTemplateEngine templateEngine;
 
     @Async
@@ -37,9 +37,9 @@ public class EmailService {
             BigDecimal amount,
             String orderReference
     ) throws MessagingException {
-        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessage mimeMessage = mailConfig.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, MULTIPART_MODE_RELATED, UTF_8.name());
-        messageHelper.setFrom("email@");
+        messageHelper.setFrom("ecommercetest@ecommercetest.com");
         final String templateName = PAYMENT_CONFIRMATION.getTemplate();
 
         Map<String, Object> variables = new HashMap<>();
@@ -58,10 +58,8 @@ public class EmailService {
             messageHelper.setText(htmlTemplate, true);
 
             messageHelper.setTo(destinationEmail);
-            mailSender.send(mimeMessage);
-            log.info("INFO - Email successfully sent to {} with template {},", destinationEmail, templateName);
+            mailConfig.send(mimeMessage);
         } catch (MessagingException e) {
-            log.warn("WARNING - Cannot send email to {}", destinationEmail);
         }
     }
 
@@ -73,9 +71,9 @@ public class EmailService {
             String orderReference,
             List<Product> products
     ) throws MessagingException {
-        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessage mimeMessage = mailConfig.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, MULTIPART_MODE_RELATED, UTF_8.name());
-        messageHelper.setFrom("email@");
+        messageHelper.setFrom("ecommercetest@ecommercetest.com");
 
         final String templateName = ORDER_CONFIRMATION.getTemplate();
 
@@ -95,10 +93,8 @@ public class EmailService {
             messageHelper.setText(htmlTemplate, true);
 
             messageHelper.setTo(destinationEmail);
-            mailSender.send(mimeMessage);
-            log.info("INFO - Email successfully sent to {} with template {},", destinationEmail, templateName);
+            mailConfig.send(mimeMessage);
         } catch (MessagingException e) {
-            log.warn("WARNING - Cannot send email to {}", destinationEmail);
         }
     }
 }
