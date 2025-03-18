@@ -27,8 +27,10 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         cache: maven
+        
     - name: Build with Maven
-      run: cd services/customer && pwd && ls && mvn -B package --file pom.xml
+      working-directory: services/customer
+      run: mvn clean install
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
