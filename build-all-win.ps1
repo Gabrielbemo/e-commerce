@@ -1,6 +1,5 @@
 $services = @("config-server", "customer", "discovery", "order", "payment", "notification", "product", "gateway")
 
-# Variável para rastrear erros
 $buildFailed = $false
 
 foreach ($service in $services) {
@@ -29,9 +28,9 @@ foreach ($service in $services) {
 
 # Mensagem final
 if ($buildFailed) {
-    Write-Host "❌ Ocorreu um erro em pelo menos um serviço!"
+    Write-Host "❌ An error occurred in at least one service!"
     exit 1
 } else {
-    Write-Host "✅ Todos os serviços foram compilados com sucesso!"
+    Write-Host "✅ All services have been compiled successfully!"
     exit 0
 }
