@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/product
+    url: jdbc:postgresql://ms_pg_sql:5432/product
     username: gabriel
     password: gabriel
   jpa:

@@ -1,9 +1,9 @@
 eureka:
   instance:
-    hostname: localhost
+    hostname: ms-discovery
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://ms-discovery:8761/eureka
 spring:
   cloud:
     config:
@@ -13,3 +13,13 @@ management:
   tracing:
     sampling:
       probability: 1.0
+    zipkin:
+      tracing:
+        endpoint: http://zipkin:9411/api/v2/spans
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/order
+    url: jdbc:postgresql://ms_pg_sql:5432/order
     username: gabriel
     password: gabriel
   jpa:
@@ -22,6 +22,6 @@ server:
 
 application:
   config:
-    customer-url: http://localhost:8090/api/v1/customers
-    payment-url: http://localhost:8060/api/v1/payments
-    product-url: http://localhost:8050/api/v1/products
+    customer-url: http://host.docker.internal:8090/api/v1/customers
+    payment-url: http://host.docker.internal:8060/api/v1/payments
+    product-url: http://host.docker.internal:8050/api/v1/products

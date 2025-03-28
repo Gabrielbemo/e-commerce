@@ -3,7 +3,7 @@ spring:
     mongodb:
       username: gabriel
       password: gabriel
-      host: localhost
+      host: ms_mongo_db
       port: 27017
       database: customer
       authentication-database: admin
